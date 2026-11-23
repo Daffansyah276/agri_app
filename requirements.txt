@@ -1,0 +1,19 @@
+# 🌾 AgriFarm Pro — Persyaratan Paket Python
+
+# Web Framework
+streamlit>=1.28.0
+
+# Data & Visualisasi
+pandas>=2.0.0
+plotly>=5.15.0
+numpy>=1.24.0
+
+# Computer Vision & AI
+ultralytics>=8.0.0        # YOLOv8
+opencv-python>=4.8.0      # OpenCV untuk pemrosesan gambar
+Pillow>=10.0.0            # PIL untuk manipulasi gambar
+
+# (Opsional) Untuk sensor hardware nyata
+# pyserial>=3.5          # Komunikasi sensor serial (Arduino/ESP32)
+# adafruit-dht>=1.4.0    # Sensor DHT11/DHT22 Raspberry Pi
+# RPi.GPIO>=0.7.0        # GPIO Raspberry Pi

@@ -1,0 +1,1653 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Tani Pintar</title>
+
+  <!-- Google Fonts: Plus Jakarta Sans / Inter -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Playfair+Display:ital,wght@0,600;1,600&display=swap"
+    rel="stylesheet">
+
+  <!-- Font Awesome Icons -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet" />
+  <!-- Bootstrap 5 CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <!-- Chart.js -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+
+  <!-- External CSS -->
+  <link rel="stylesheet" href="style.css" />
+</head>
+
+<body>
+
+  <!-- ════════════════════════ NAVBAR ════════════════════════ -->
+  <nav class="agri-nav">
+    <div class="container d-flex align-items-center justify-content-between">
+      <!-- Logo -->
+      <a href="#" class="brand-logo" onclick="switchMainTab('dashboard')">
+        <div class="brand-logo-icon">
+          <i class="fas fa-leaf"></i>
+        </div>
+        <span>Tani Pintar</span>
+      </a>
+
+      <!-- Menu Navigation -->
+      <ul class="nav-links-list d-none d-lg-flex">
+        <li><a class="nav-item-link active" onclick="switchMainTab('dashboard', this)">Home</a></li>
+        <li><a class="nav-item-link" onclick="switchMainTab('kalkulator', this)">Kalkulator</a></li>
+        <li><a class="nav-item-link" onclick="switchMainTab('monitoring', this)">Sensor & pH</a></li>
+        <li><a class="nav-item-link" onclick="switchMainTab('esp32', this)">Irigasi</a></li>
+        <li><a class="nav-item-link" onclick="switchMainTab('cuaca', this)">Cuaca</a></li>
+        <li><a class="nav-item-link" onclick="switchMainTab('yolo', this)">Deteksi </a></li>
+      </ul>
+
+      <!-- CTA & Auth Button -->
+      <div class="d-flex align-items-center gap-2">
+        <div id="nav-auth-section">
+          <!-- Button Login/Register jika belum login -->
+          <button
+            class="btn btn-outline-dark rounded-pill px-3 py-2 fw-bold text-nowrap d-flex align-items-center gap-2"
+            onclick="openAuthModal('login')">
+            <i class="fas fa-arrow-right-to-bracket text-success"></i>
+            <span>Masuk / Daftar</span>
+          </button>
+        </div>
+
+        <button class="btn-agri-dark text-nowrap d-none d-sm-inline-flex"
+          onclick="switchMainTab('esp32', document.querySelectorAll('.nav-item-link')[3])">
+          <span>Get Started</span>
+          <i class="fas fa-arrow-right"></i>
+        </button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- ════════════════════════ VIEW: DASHBOARD (HOME) ════════════════════════ -->
+  <div class="app-view active" id="view-dashboard">
+    <!-- Hero Section -->
+    <section class="hero-section">
+      <div class="container">
+        <div class="row align-items-center g-5">
+          <!-- Text Left -->
+          <div class="col-lg-6">
+            <div class="tag-badge">
+              <i class="fas fa-leaf text-success"></i>
+              <span>Smarter Farming &middot; A Healthier Tomorrow</span>
+            </div>
+            <h1 class="hero-title">
+              Modern Tech for<br />
+              <span>Better Harvests</span>
+            </h1>
+            <p class="hero-desc">
+              Tani Pintar brings smart technology to your farm helping you grow more, use resources wisely, and build a
+              sustainable future.
+            </p>
+            <div class="d-flex flex-wrap align-items-center gap-3">
+              <button class="btn-agri-dark"
+                onclick="switchMainTab('esp32', document.querySelectorAll('.nav-item-link')[3])">
+                <span>Explore Our Solutions</span>
+                <i class="fas fa-arrow-right"></i>
+              </button>
+              <button class="btn btn-outline-dark rounded-pill px-4 py-2 fw-bold d-flex align-items-center gap-2"
+                onclick="switchMainTab('yolo', document.querySelectorAll('.nav-item-link')[5])">
+                <i class=""></i>
+                <span>Coba Deteksi</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- Drone Image Right with Hand-drawn Note -->
+          <div class="col-lg-6">
+            <div class="drone-image-wrapper">
+              <img src="https://rmol.id/images/berita/normal/2023/01/970723_04030901012023_petaniii.jpg"
+                alt="Agricultural Smart Drone Spraying" class="drone-img" />
+              <div class="hand-drawn-badge">
+                <i class="fas fa-feather-pointed text-success"></i>
+                <span>Smarter tools for healthier crops</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 4 Quick Feature Pills (Floating Card) -->
+        <div class="quick-feature-panel">
+          <div class="row g-4">
+            <div class="col-md-3 col-sm-6">
+              <div class="feature-item-box"
+                onclick="switchMainTab('esp32', document.querySelectorAll('.nav-item-link')[3])">
+                <div class="feature-circle-icon icon-green">
+                  <i class="fas fa-shower"></i>
+                </div>
+                <div>
+                  <h6>Precision Spraying</h6>
+                  <p>Reduce waste, increase efficiency.</p>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-3 col-sm-6">
+              <div class="feature-item-box"
+                onclick="switchMainTab('monitoring', document.querySelectorAll('.nav-item-link')[2])">
+                <div class="feature-circle-icon icon-blue">
+                  <i class="fas fa-wifi"></i>
+                </div>
+                <div>
+                  <h6>Real-Time Monitoring</h6>
+                  <p>Track soil, weather & crop health.</p>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-3 col-sm-6">
+              <div class="feature-item-box"
+                onclick="switchMainTab('kalkulator', document.querySelectorAll('.nav-item-link')[1])">
+                <div class="feature-circle-icon icon-purple">
+                  <i class="fas fa-chart-simple"></i>
+                </div>
+                <div>
+                  <h6>Data-Driven Insights</h6>
+                  <p>Make smarter decisions, faster.</p>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-3 col-sm-6">
+              <div class="feature-item-box"
+                onclick="switchMainTab('yolo', document.querySelectorAll('.nav-item-link')[5])">
+                <div class="feature-circle-icon icon-amber">
+                  <i class="fas fa-seedling"></i>
+                </div>
+                <div>
+                  <h6>Sustainable Farming</h6>
+                  <p>Good for your farm, great for the planet.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- About / Technology That Works with Nature Section -->
+    <section class="py-5 my-4">
+      <div class="container">
+        <div class="row align-items-center g-5">
+          <div class="col-lg-5">
+            <div class="section-eyebrow">ABOUT AGRINOVA</div>
+            <h2 class="section-headline mb-3">
+              Technology that works with nature
+            </h2>
+            <p class="text-muted mb-4 fs-6">
+              We build intelligent farming solutions that help farmers increase productivity, reduce costs, and protect
+              the environment — all with the power of modern technology.
+            </p>
+            <button class="btn btn-outline-dark rounded-pill px-4 py-2 fw-bold"
+              onclick="switchMainTab('monitoring', document.querySelectorAll('.nav-item-link')[2])">
+              <span>Learn More</span>
+              <i class="fas fa-arrow-right ms-2"></i>
+            </button>
+          </div>
+
+          <!-- Farmer with Tablet and Augmented Reality HUD card -->
+          <div class="col-lg-7">
+            <div class="farmer-hud-card">
+              <img src="https://images.unsplash.com/photo-1592982537447-7440770cbfc9?auto=format&fit=crop&w=1200&q=80"
+                alt="Farmer holding tablet in green field" class="farmer-bg-img" />
+
+              <!-- Glassmorphism Telemetry HUD -->
+              <div class="hud-glass-badge">
+                <div class="hud-stat-row">
+                  <div class="hud-icon-box">
+                    <i class="fas fa-droplet"></i>
+                  </div>
+                  <div class="hud-stat-text">
+                    <small>Soil Moisture</small>
+                    <strong id="hud-soil-val">68%</strong>
+                  </div>
+                </div>
+                <div class="hud-stat-row">
+                  <div class="hud-icon-box">
+                    <i class="fas fa-temperature-half"></i>
+                  </div>
+                  <div class="hud-stat-text">
+                    <small>Temperature</small>
+                    <strong id="hud-temp-val">28°C</strong>
+                  </div>
+                </div>
+                <div class="hud-stat-row">
+                  <div class="hud-icon-box">
+                    <i class="fas fa-heart-pulse"></i>
+                  </div>
+                  <div class="hud-stat-text">
+                    <small>Crop Health</small>
+                    <strong class="text-success">Good</strong>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Real Impact Banner -->
+        <div class="impact-banner mt-5">
+          <div class="row align-items-center g-4">
+            <div class="col-lg-4">
+              <h3 class="impact-title">Real Impact.<br />Across Every Farm.</h3>
+            </div>
+            <div class="col-lg-6">
+              <div class="row g-3">
+                <div class="col-4 border-end border-secondary">
+                  <div class="impact-metric-val">12K+</div>
+                  <div class="impact-metric-lbl">Farmers Empowered</div>
+                </div>
+                <div class="col-4 border-end border-secondary">
+                  <div class="impact-metric-val">45%</div>
+                  <div class="impact-metric-lbl">Average Yield Increase</div>
+                </div>
+                <div class="col-4">
+                  <div class="impact-metric-val">3.2K</div>
+                  <div class="impact-metric-lbl">Tons of CO₂ Reduced</div>
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-2 text-lg-end">
+              <a href="#" class="btn-impact-white"
+                onclick="switchMainTab('esp32', document.querySelectorAll('.nav-item-link')[3])">
+                <span>Join Our Mission</span>
+                <i class="fas fa-arrow-right"></i>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <!-- ════════════════════════ VIEW: KALKULATOR PERTANIAN ════════════════════════ -->
+  <div class="app-view py-5" id="view-kalkulator">
+    <div class="container">
+      <div class="text-center max-w-700 mx-auto mb-4">
+        <div class="section-eyebrow">PRECISION FARMING CALCULATORS</div>
+        <h2 class="section-headline">Kalkulator Kebutuhan Pertanian</h2>
+        <p class="text-muted">Kalkulasi presisi untuk dosis pupuk, kebutuhan debit air, estimasi panen, hingga kalkulasi
+          ROI modal tani.</p>
+      </div>
+
+      <!-- Segmented Control Pills -->
+      <div class="section-tab-control">
+        <button class="tab-pill-btn active" onclick="showSubCalc('pupuk', this)">🌱 Pupuk</button>
+        <button class="tab-pill-btn" onclick="showSubCalc('irigasi', this)">💧 Irigasi</button>
+        <button class="tab-pill-btn" onclick="showSubCalc('panen', this)">🌾 Panen</button>
+        <button class="tab-pill-btn" onclick="showSubCalc('pestisida', this)">🐛 Pestisida</button>
+        <button class="tab-pill-btn" onclick="showSubCalc('roi', this)">💰 Analisis ROI</button>
+      </div>
+
+      <!-- TAB 1: PUPUK -->
+      <div class="sub-calc-panel" id="subcalc-pupuk">
+        <div class="clean-card max-w-900 mx-auto">
+          <h5 class="fw-bold mb-3"><i class="fas fa-leaf text-success me-2"></i>Kalkulator Dosis Pupuk Tanaman</h5>
+          <div class="row g-3">
+            <div class="col-md-6">
+              <label class="form-label">Luas Lahan (Hektar)</label>
+              <input type="number" class="form-control" id="p-luas" value="1" min="0.1" step="0.1" />
+            </div>
+            <div class="col-md-6">
+              <label class="form-label">Jenis Tanaman</label>
+              <select class="form-select" id="p-tanaman">
+                <option value="Padi">Padi Sawah</option>
+                <option value="Jagung">Jagung Hibrida</option>
+                <option value="Cabai">Cabai Merah</option>
+                <option value="Tomat">Tomat</option>
+                <option value="Kedelai">Kedelai</option>
+              </select>
+            </div>
+            <div class="col-md-6">
+              <label class="form-label">Jenis Pupuk</label>
+              <select class="form-select" id="p-pupuk">
+                <option value="NPK">NPK (16-16-16)</option>
+                <option value="Urea">Urea (46% N)</option>
+                <option value="SP36">SP-36 (36% P₂O₅)</option>
+                <option value="KCl">KCl (60% K₂O)</option>
+              </select>
+            </div>
+            <div class="col-md-6">
+              <label class="form-label">Fase Pertumbuhan</label>
+              <select class="form-select" id="p-fase">
+                <option value="0.1">Pembibitan</option>
+                <option value="0.3">Vegetatif Awal</option>
+                <option value="0.4" selected>Vegetatif Aktif</option>
+                <option value="0.15">Generatif / Berbunga</option>
+              </select>
+            </div>
+          </div>
+          <button class="btn-agri-dark mt-4" onclick="hitungPupuk()"><i class="fas fa-calculator me-2"></i>Hitung
+            Kebutuhan Pupuk</button>
+
+          <div id="hasil-pupuk" class="mt-4 p-4 rounded-4 bg-light d-none">
+            <div class="row g-3 text-center">
+              <div class="col-md-4">
+                <small class="text-muted">Total Pupuk Dibutuhkan</small>
+                <h3 class="fw-bold text-success mb-0" id="res-p1">-</h3>
+              </div>
+              <div class="col-md-4">
+                <small class="text-muted">Dosis per Hektar</small>
+                <h3 class="fw-bold text-dark mb-0" id="res-p2">-</h3>
+              </div>
+              <div class="col-md-4">
+                <small class="text-muted">Estimasi Biaya</small>
+                <h3 class="fw-bold text-dark mb-0" id="res-p3">-</h3>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- TAB 2: IRIGASI -->
+      <div class="sub-calc-panel d-none" id="subcalc-irigasi">
+        <div class="clean-card max-w-900 mx-auto">
+          <h5 class="fw-bold mb-3"><i class="fas fa-tint text-primary me-2"></i>Kalkulator Kebutuhan Air Irigasi
+            (Penman-Monteith)</h5>
+          <div class="row g-3">
+            <div class="col-md-4">
+              <label class="form-label">Luas Lahan (Hektar)</label>
+              <input type="number" class="form-control" id="i-luas" value="1" min="0.1" step="0.1" />
+            </div>
+            <div class="col-md-4">
+              <label class="form-label">Komoditas</label>
+              <select class="form-select" id="i-tanaman">
+                <option>Padi</option>
+                <option>Jagung</option>
+                <option>Cabai</option>
+                <option>Tomat</option>
+              </select>
+            </div>
+            <div class="col-md-4">
+              <label class="form-label">Metode Irigasi</label>
+              <select class="form-select" id="i-metode">
+                <option value="1.0" selected>Alur / Furrow (Kc: 1.0)</option>
+                <option value="0.75">Drip Tetes (Kc: 0.75 - Efisien)</option>
+                <option value="1.2">Genangan / Flood (Kc: 1.2)</option>
+              </select>
+            </div>
+            <div class="col-md-6">
+              <label class="form-label">Suhu Udara Rata-rata: <span id="i-suhu-val">30</span>°C</label>
+              <input type="range" class="form-range" id="i-suhu" min="20" max="40" value="30"
+                oninput="document.getElementById('i-suhu-val').textContent=this.value" />
+            </div>
+            <div class="col-md-6">
+              <label class="form-label">Kelembaban Udara: <span id="i-lembab-val">70</span>%</label>
+              <input type="range" class="form-range" id="i-lembab" min="30" max="100" value="70"
+                oninput="document.getElementById('i-lembab-val').textContent=this.value" />
+            </div>
+          </div>
+          <button class="btn-agri-dark mt-4" onclick="hitungIrigasi()"><i class="fas fa-water me-2"></i>Hitung Kebutuhan
+            Debit Air</button>
+
+          <div id="hasil-irigasi" class="mt-4 p-4 rounded-4 bg-light d-none">
+            <div class="row g-3 text-center">
+              <div class="col-md-3">
+                <small class="text-muted">ET₀ Referensi</small>
+                <h4 class="fw-bold mb-0" id="res-i1">-</h4>
+              </div>
+              <div class="col-md-3">
+                <small class="text-muted">ETc Aktual</small>
+                <h4 class="fw-bold mb-0" id="res-i2">-</h4>
+              </div>
+              <div class="col-md-3">
+                <small class="text-muted">Volume Air/Hari</small>
+                <h4 class="fw-bold text-primary mb-0" id="res-i3">-</h4>
+              </div>
+              <div class="col-md-3">
+                <small class="text-muted">Volume 7 Hari</small>
+                <h4 class="fw-bold text-dark mb-0" id="res-i4">-</h4>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- TAB 3: PANEN -->
+      <div class="sub-calc-panel d-none" id="subcalc-panen">
+        <div class="clean-card max-w-900 mx-auto">
+          <h5 class="fw-bold mb-3"><i class="fas fa-wheat-awn text-warning me-2"></i>Estimasi Produktivitas & Pendapatan
+            Panen</h5>
+          <div class="row g-3">
+            <div class="col-md-6">
+              <label class="form-label">Luas Lahan (ha)</label>
+              <input type="number" class="form-control" id="pn-luas" value="1" min="0.1" step="0.1" />
+            </div>
+            <div class="col-md-6">
+              <label class="form-label">Pilihan Tanaman</label>
+              <select class="form-select" id="pn-tanaman">
+                <option value="Padi,6,5500">Padi Sawah (Std: 6 ton/ha &middot; Rp 5.500/kg)</option>
+                <option value="Jagung,7,4500">Jagung (Std: 7 ton/ha &middot; Rp 4.500/kg)</option>
+                <option value="Cabai,10,25000">Cabai Merah (Std: 10 ton/ha &middot; Rp 25.000/kg)</option>
+              </select>
+            </div>
+          </div>
+          <button class="btn-agri-dark mt-4" onclick="hitungPanen()"><i class="fas fa-chart-line me-2"></i>Kalkulasi
+            Estimasi Panen</button>
+
+          <div id="hasil-panen" class="mt-4 p-4 rounded-4 bg-light d-none">
+            <div class="row g-3 text-center">
+              <div class="col-md-4">
+                <small class="text-muted">Produktivitas Aktual</small>
+                <h3 class="fw-bold text-success mb-0" id="res-pn1">-</h3>
+              </div>
+              <div class="col-md-4">
+                <small class="text-muted">Total Bobot Panen</small>
+                <h3 class="fw-bold text-dark mb-0" id="res-pn2">-</h3>
+              </div>
+              <div class="col-md-4">
+                <small class="text-muted">Proyeksi Omset Penjualan</small>
+                <h3 class="fw-bold text-primary mb-0" id="res-pn3">-</h3>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- TAB 4: PESTISIDA -->
+      <div class="sub-calc-panel d-none" id="subcalc-pestisida">
+        <div class="clean-card max-w-900 mx-auto">
+          <h5 class="fw-bold mb-3"><i class="fas fa-bug text-danger me-2"></i>Kalkulator Dosis & Biaya Pestisida</h5>
+          <div class="row g-3">
+            <div class="col-md-4">
+              <label class="form-label">Luas Lahan (ha)</label>
+              <input type="number" class="form-control" id="ps-luas" value="1" min="0.1" step="0.1" />
+            </div>
+            <div class="col-md-4">
+              <label class="form-label">Volume Semprot (L/ha)</label>
+              <input type="number" class="form-control" id="ps-vol" value="400" />
+            </div>
+            <div class="col-md-4">
+              <label class="form-label">Konsentrasi (ml/L air)</label>
+              <input type="number" class="form-control" id="ps-konsen" value="2" step="0.5" />
+            </div>
+          </div>
+          <button class="btn-agri-dark mt-4" onclick="hitungPestisida()"><i class="fas fa-spray-can me-2"></i>Hitung
+            Kebutuhan Bahan Aktif</button>
+
+          <div id="hasil-pestisida" class="mt-4 p-4 rounded-4 bg-light d-none">
+            <div class="row g-3 text-center">
+              <div class="col-md-4">
+                <small class="text-muted">Total Air Aplikasi</small>
+                <h4 class="fw-bold mb-0" id="res-ps1">-</h4>
+              </div>
+              <div class="col-md-4">
+                <small class="text-muted">Bahan Aktif per Aplikasi</small>
+                <h4 class="fw-bold text-danger mb-0" id="res-ps2">-</h4>
+              </div>
+              <div class="col-md-4">
+                <small class="text-muted">Estimasi Biaya 3x Semprot</small>
+                <h4 class="fw-bold text-dark mb-0" id="res-ps3">-</h4>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- TAB 5: ROI -->
+      <div class="sub-calc-panel d-none" id="subcalc-roi">
+        <div class="clean-card max-w-900 mx-auto">
+          <h5 class="fw-bold mb-3"><i class="fas fa-coins text-warning me-2"></i>Analisis Kelayakan Finansial (ROI) Tani
+          </h5>
+          <div class="row g-3">
+            <div class="col-md-6 border-end pe-md-4">
+              <h6 class="fw-bold text-danger mb-3">Biaya Input Operasional (Rp)</h6>
+              <div class="mb-2"><label class="form-label small">Benih</label><input type="number"
+                  class="form-control form-control-sm" id="r-benih" value="500000" /></div>
+              <div class="mb-2"><label class="form-label small">Pupuk</label><input type="number"
+                  class="form-control form-control-sm" id="r-pupuk" value="1500000" /></div>
+              <div class="mb-2"><label class="form-label small">Tenaga Kerja</label><input type="number"
+                  class="form-control form-control-sm" id="r-tk" value="3000000" /></div>
+            </div>
+            <div class="col-md-6 ps-md-4">
+              <h6 class="fw-bold text-success mb-3">Pendapatan Penjualan</h6>
+              <div class="mb-2"><label class="form-label small">Hasil Panen (ton)</label><input type="number"
+                  class="form-control form-control-sm" id="r-ton" value="5" /></div>
+              <div class="mb-2"><label class="form-label small">Harga Jual (Rp/kg)</label><input type="number"
+                  class="form-control form-control-sm" id="r-harga" value="5500" /></div>
+            </div>
+          </div>
+          <button class="btn-agri-dark mt-4" onclick="hitungROI()"><i class="fas fa-chart-pie me-2"></i>Kalkulasi ROI
+            Bersih</button>
+
+          <div id="hasil-roi" class="mt-4 p-4 rounded-4 bg-light d-none">
+            <div class="row g-3 text-center">
+              <div class="col-md-3"><small class="text-muted">Total Biaya</small>
+                <h5 class="fw-bold mb-0" id="res-r1">-</h5>
+              </div>
+              <div class="col-md-3"><small class="text-muted">Total Omset</small>
+                <h5 class="fw-bold mb-0" id="res-r2">-</h5>
+              </div>
+              <div class="col-md-3"><small class="text-muted">Laba Bersih</small>
+                <h5 class="fw-bold text-success mb-0" id="res-r3">-</h5>
+              </div>
+              <div class="col-md-3"><small class="text-muted">Persentase ROI</small>
+                <h5 class="fw-bold text-primary mb-0" id="res-r4">-</h5>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ════════════════════════ VIEW: MONITORING SENSOR & PH ════════════════════════ -->
+  <div class="app-view py-5" id="view-monitoring">
+    <div class="container">
+      <div class="text-center max-w-700 mx-auto mb-4">
+        <div class="section-eyebrow">REAL-TIME TELEMETRY</div>
+        <h2 class="section-headline">Sensor Tanah, Lingkungan & pH</h2>
+        <p class="text-muted">Telemetri sensor kelembaban tanah, suhu udara, kadar oksigen (O₂), dan analisa keasaman
+          tanah (pH) secara real-time.</p>
+      </div>
+
+      <!-- Control Bar -->
+      <div class="clean-card mb-4">
+        <div class="row align-items-center g-3">
+          <div class="col-md-4">
+            <label class="form-label">Sektor Lahan Sensor:</label>
+            <select class="form-select" id="mon-lokasi" onchange="bacaSensor()">
+              <option>Sektor A - Lahan Padi Utama</option>
+              <option>Sektor B - Kebun Palawija</option>
+              <option>Sektor C - Greenhouse Sayur</option>
+            </select>
+          </div>
+          <div class="col-md-4">
+            <label class="form-label">Interval Auto-Polling:</label>
+            <select class="form-select" id="mon-interval" onchange="ubahInterval()">
+              <option value="3000">Setiap 3 Detik (Cepat)</option>
+              <option value="5000" selected>Setiap 5 Detik (Normal)</option>
+              <option value="0">Manual</option>
+            </select>
+          </div>
+          <div class="col-md-4 text-md-end mt-4">
+            <button class="btn-agri-dark w-100" onclick="bacaSensor()"><i class="fas fa-rotate me-2"></i>Perbarui Data
+              Sensor</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- 6 Metrics Cards -->
+      <div class="row g-4 mb-4">
+        <div class="col-md-4 col-sm-6">
+          <div class="clean-card">
+            <div class="d-flex justify-content-between align-items-start">
+              <div>
+                <small class="text-muted fw-bold">KELEMBABAN TANAH</small>
+                <h2 class="fw-bold my-1 text-primary" id="s-soil">68.2%</h2>
+                <small class="text-success"><i class="fas fa-check-circle me-1"></i>Kondisi Ideal</small>
+              </div>
+              <div class="feature-circle-icon icon-blue"><i class="fas fa-droplet"></i></div>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4 col-sm-6">
+          <div class="clean-card">
+            <div class="d-flex justify-content-between align-items-start">
+              <div>
+                <small class="text-muted fw-bold">KADAR pH TANAH</small>
+                <h2 class="fw-bold my-1 text-success" id="s-ph">6.52</h2>
+                <small class="text-success"><i class="fas fa-seedling me-1"></i>Netral / Optimal</small>
+              </div>
+              <div class="feature-circle-icon icon-green"><i class="fas fa-flask"></i></div>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4 col-sm-6">
+          <div class="clean-card">
+            <div class="d-flex justify-content-between align-items-start">
+              <div>
+                <small class="text-muted fw-bold">SUHU UDARA</small>
+                <h2 class="fw-bold my-1 text-dark" id="s-suhu">28.4°C</h2>
+                <small class="text-muted">Rentang: 22°C - 32°C</small>
+              </div>
+              <div class="feature-circle-icon icon-amber"><i class="fas fa-temperature-half"></i></div>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4 col-sm-6">
+          <div class="clean-card">
+            <div class="d-flex justify-content-between align-items-start">
+              <div>
+                <small class="text-muted fw-bold">KELEMBABAN UDARA</small>
+                <h2 class="fw-bold my-1 text-dark" id="s-lembab">72%</h2>
+                <small class="text-muted">Normal (60 - 80%)</small>
+              </div>
+              <div class="feature-circle-icon icon-blue"><i class="fas fa-wind"></i></div>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4 col-sm-6">
+          <div class="clean-card">
+            <div class="d-flex justify-content-between align-items-start">
+              <div>
+                <small class="text-muted fw-bold">KADAR OKSIGEN (O₂)</small>
+                <h2 class="fw-bold my-1 text-success" id="s-o2">20.8%</h2>
+                <small class="text-success">Aerasi Tanah Sehat</small>
+              </div>
+              <div class="feature-circle-icon icon-green"><i class="fas fa-lungs"></i></div>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4 col-sm-6">
+          <div class="clean-card">
+            <div class="d-flex justify-content-between align-items-start">
+              <div>
+                <small class="text-muted fw-bold">KONSENTRASI CO₂</small>
+                <h2 class="fw-bold my-1 text-dark" id="s-co2">412 ppm</h2>
+                <small class="text-muted">Fotosintesis Prima</small>
+              </div>
+              <div class="feature-circle-icon icon-purple"><i class="fas fa-cloud"></i></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- pH Spectrum Scale & Recommendations -->
+      <div class="clean-card mb-4">
+        <h6 class="fw-bold mb-1"><i class="fas fa-vial text-success me-2"></i>Spektrum Skala Keasaman / Kebasaan (pH
+          Tanah)</h6>
+        <div class="d-flex justify-content-between small text-muted">
+          <span>Masam / Asam (&lt; 5.5)</span>
+          <span class="fw-bold text-success">Netral Ideal (6.0 - 7.2)</span>
+          <span>Alkali / Basa (&gt; 7.8)</span>
+        </div>
+        <div class="ph-spectrum-bar">
+          <div class="ph-spectrum-thumb" id="ph-spectrum-thumb" style="left: 48%;"></div>
+        </div>
+        <div class="d-flex justify-content-between small fw-bold text-muted">
+          <span>pH 0</span><span>pH 4</span><span>pH 7</span><span>pH 10</span><span>pH 14</span>
+        </div>
+        <p class="small text-muted mt-3 mb-0" id="ph-rekomendasi-teks">
+          <i class="fas fa-circle-check text-success me-1"></i> Status: pH tanah berada pada skala netral yang sangat
+          mendukung serapan pupuk N-P-K tanpa risiko keracunan alumunium.
+        </p>
+      </div>
+
+      <!-- Charts -->
+      <div class="row g-4">
+        <div class="col-lg-6">
+          <div class="clean-card">
+            <h6 class="fw-bold mb-3">Tren Kelembaban Tanah (%) vs Kelembaban Udara (%)</h6>
+            <canvas id="chart-lembab" height="160"></canvas>
+          </div>
+        </div>
+        <div class="col-lg-6">
+          <div class="clean-card">
+            <h6 class="fw-bold mb-3">Fluktuasi pH Tanah Terkini</h6>
+            <canvas id="chart-ph" height="160"></canvas>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ════════════════════════ VIEW: IRIGASI ELEKTRONIK ESP32 ════════════════════════ -->
+  <div class="app-view py-5" id="view-esp32">
+    <div class="container">
+      <div class="text-center max-w-700 mx-auto mb-4">
+        <div class="section-eyebrow">IOT AUTOMATION</div>
+        <h2 class="section-headline">Irigasi Elektronik ESP32</h2>
+        <p class="text-muted">Kontrol modul relay pompa air, selenoid valve pipa tetes, dan otomatisasi berbasis nilai
+          sensor kelembaban tanah.</p>
+      </div>
+
+      <!-- Hardware Node Status -->
+      <div class="clean-card mb-4">
+        <div class="row align-items-center g-3">
+          <div class="col-md-5 border-end pe-md-4">
+            <div class="d-flex align-items-center gap-3">
+              <div class="feature-circle-icon icon-green"><i class="fas fa-microchip"></i></div>
+              <div>
+                <h5 class="fw-bold mb-0">ESP32-AgriNode-WiFi</h5>
+                <small class="text-muted">Endpoint: <code>http://192.168.1.185</code></small><br />
+                <span class="badge bg-success rounded-pill px-3 py-1 mt-1"><i class="fas fa-circle me-1 small"></i>Node
+                  Online (Ping 16ms)</span>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-7 ps-md-4">
+            <div class="row g-2">
+              <div class="col-6"><small class="text-muted d-block">Pin Relay Pompa:</small><span
+                  class="badge bg-light text-dark border">GPIO 26</span></div>
+              <div class="col-6"><small class="text-muted d-block">Pin Sensor Tanah ADC:</small><span
+                  class="badge bg-light text-dark border">GPIO 34</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Pump Switch & Automation -->
+      <div class="row g-4 mb-4">
+        <div class="col-lg-6">
+          <div class="clean-card">
+            <h5 class="fw-bold mb-3">Saklar Relay Pompa Elektronik</h5>
+            <div class="pump-controller-box mb-3" id="pump-card-box">
+              <div class="pump-icon-glow" id="pump-bulb"><i class="fas fa-water"></i></div>
+              <h4 class="fw-bold mb-1" id="pump-status-title">POMPA MATI (IDLE)</h4>
+              <p class="small text-muted mb-4" id="pump-status-desc">Relay GPIO 26 dalam posisi OFF. Aliran air ke pipa
+                irigasi tertutup.</p>
+
+              <div class="d-flex justify-content-center gap-3">
+                <button class="btn-agri-dark" id="btn-pump-on" onclick="setPompa(true)">
+                  <i class="fas fa-play me-2"></i>Hidupkan Pompa
+                </button>
+                <button class="btn btn-outline-danger rounded-pill px-4 fw-bold" id="btn-pump-off"
+                  onclick="setPompa(false)" disabled>
+                  <i class="fas fa-stop me-2"></i>Matikan Pompa
+                </button>
+              </div>
+            </div>
+
+            <!-- Timer Siram -->
+            <div class="p-3 bg-light rounded-4">
+              <label class="form-label small">Siram Berdurasi (Auto Timer):</label>
+              <div class="input-group">
+                <select class="form-select" id="pump-timer-duration">
+                  <option value="15">Siram 15 Detik (Bibit)</option>
+                  <option value="60" selected>Siram 1 Menit (Sayur Bedengan)</option>
+                  <option value="300">Siram 5 Menit (Lahan Terbuka)</option>
+                </select>
+                <button class="btn btn-dark" onclick="siramBerdurasi()"><i class="fas fa-clock me-1"></i>Mulai</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-lg-6">
+          <div class="clean-card">
+            <h5 class="fw-bold mb-3">Mode Otomatisasi (Smart Threshold)</h5>
+            <div class="form-check form-switch p-3 bg-light rounded-4 mb-3">
+              <input class="form-check-input ms-0 me-3" type="checkbox" id="auto-irrigation-switch" checked
+                onchange="toggleAutoIrrigation()" />
+              <label class="form-check-label fw-bold" for="auto-irrigation-switch">
+                Otomasi Mandiri oleh Mikrokontroler ESP32
+              </label>
+              <small class="text-muted d-block">ESP32 akan menyalakan pompa saat kelembaban tanah turun di bawah batas
+                kering.</small>
+            </div>
+
+            <div class="mb-3">
+              <label class="form-label d-flex justify-content-between">
+                <span>Batas Kering (Pompa ON Otomatis):</span>
+                <strong class="text-danger" id="threshold-on-val">40%</strong>
+              </label>
+              <input type="range" class="form-range" id="threshold-on-slider" min="20" max="60" value="40"
+                oninput="document.getElementById('threshold-on-val').textContent=this.value+'%'" />
+            </div>
+
+            <div class="mb-4">
+              <label class="form-label d-flex justify-content-between">
+                <span>Batas Lembab (Pompa OFF Otomatis):</span>
+                <strong class="text-success" id="threshold-off-val">70%</strong>
+              </label>
+              <input type="range" class="form-range" id="threshold-off-slider" min="50" max="90" value="70"
+                oninput="document.getElementById('threshold-off-val').textContent=this.value+'%'" />
+            </div>
+
+            <button class="btn btn-outline-dark rounded-pill w-100 fw-bold" onclick="simpanPengaturanESP32()"><i
+                class="fas fa-floppy-disk me-2"></i>Sinkronisasi Parameter ke ESP32</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Terminal Log -->
+      <div class="clean-card">
+        <h6 class="fw-bold mb-2"><i class="fas fa-terminal me-2"></i>Serial Log Telemetri ESP32</h6>
+        <div class="clean-terminal" id="esp32-terminal">
+          [00:00:01] [ESP32-Boot] Booting AgriNova Node v2.5 WiFi...
+          [00:00:02] [WiFi] Connected to SSID: AgriNova-Field, IP: 192.168.1.185
+          [00:00:03] [ADC] Soil Moisture Sensor Pin GPIO34 Calibrated.
+          [00:00:04] [Relay] GPIO 26 Set to LOW (Pump: OFF).
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ════════════════════════ VIEW: PRAKIRAAN CUACA ════════════════════════ -->
+  <div class="app-view py-5" id="view-cuaca">
+    <div class="container">
+      <div class="text-center max-w-700 mx-auto mb-4">
+        <div class="section-eyebrow">WEATHER INTELLIGENCE</div>
+        <h2 class="section-headline">Prakiraan Cuaca Pertanian</h2>
+        <p class="text-muted">Kondisi agroklimatologi harian dan prediksi 5 hari ke depan untuk penjadwalan irigasi dan
+          penyemprotan.</p>
+      </div>
+
+      <!-- Weather Hero -->
+      <div class="weather-glass-hero mb-4">
+        <div class="row align-items-center g-4">
+          <div class="col-lg-6">
+            <div class="d-flex align-items-center gap-4">
+              <span style="font-size: 4rem;">⛅</span>
+              <div>
+                <h1 class="display-3 fw-bold mb-0">29°C</h1>
+                <h5 class="text-white-50 mb-0">Cerah Berawan &middot; Kelembaban 72%</h5>
+                <small class="text-white-50"><i class="fas fa-location-dot me-1"></i>Stasiun Agroklimat Wilayah
+                  Lahan</small>
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-6">
+            <div class="row g-3">
+              <div class="col-6">
+                <div class="forecast-mini-card"><small>Peluang Hujan</small>
+                  <div class="fs-4 fw-bold">25%</div><small class="text-white-50">Rendah</small>
+                </div>
+              </div>
+              <div class="col-6">
+                <div class="forecast-mini-card"><small>Kecepatan Angin</small>
+                  <div class="fs-4 fw-bold">11 km/j</div><small class="text-white-50">Tenggara</small>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 5-Day Forecast -->
+      <div class="clean-card mb-4">
+        <h6 class="fw-bold mb-3">Prediksi 5 Hari ke Depan</h6>
+        <div class="row g-3 text-center">
+          <div class="col">
+            <div class="p-3 bg-light rounded-4"><small class="text-muted fw-bold">Hari Ini</small>
+              <div class="fs-2 my-1">⛅</div><strong class="d-block">30° / 23°</strong><small
+                class="text-muted">Cerah</small>
+            </div>
+          </div>
+          <div class="col">
+            <div class="p-3 bg-light rounded-4"><small class="text-muted fw-bold">Besok</small>
+              <div class="fs-2 my-1">🌧️</div><strong class="d-block text-primary">28° / 22°</strong><small
+                class="text-primary">Hujan 70%</small>
+            </div>
+          </div>
+          <div class="col">
+            <div class="p-3 bg-light rounded-4"><small class="text-muted fw-bold">Lusa</small>
+              <div class="fs-2 my-1">🌦️</div><strong class="d-block">29° / 22°</strong><small
+                class="text-muted">Gerimis</small>
+            </div>
+          </div>
+          <div class="col">
+            <div class="p-3 bg-light rounded-4"><small class="text-muted fw-bold">+3 Hari</small>
+              <div class="fs-2 my-1">☀️</div><strong class="d-block">32° / 24°</strong><small
+                class="text-muted">Terik</small>
+            </div>
+          </div>
+          <div class="col">
+            <div class="p-3 bg-light rounded-4"><small class="text-muted fw-bold">+4 Hari</small>
+              <div class="fs-2 my-1">⛅</div><strong class="d-block">31° / 23°</strong><small
+                class="text-muted">Berawan</small>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ════════════════════════ VIEW: DETEKSI YOLOv8 ════════════════════════ -->
+  <div class="app-view py-5" id="view-yolo">
+    <div class="container">
+      <div class="text-center max-w-700 mx-auto mb-4">
+        <div class="section-eyebrow">AI COMPUTER VISION</div>
+        <h2 class="section-headline">Deteksi Hama & Gulma YOLOv8</h2>
+        <p class="text-muted">Unggah foto tanaman untuk mendeteksi hama, gulma, dan penyakit daun secara instan dengan
+          bounding box.</p>
+      </div>
+
+      <div class="row g-4">
+        <div class="col-lg-5">
+          <div class="clean-card mb-4">
+            <h6 class="fw-bold mb-3">1. Masukkan Foto Tanaman</h6>
+            <input type="file" class="form-control mb-3" id="foto-input" accept="image/*"
+              onchange="previewFoto(event)" />
+            <div id="preview-wrap" class="d-none">
+              <img id="preview-img" src="" class="img-fluid rounded-4 mb-3"
+                style="max-height: 250px; width: 100%; object-fit: cover;" />
+            </div>
+
+            <div class="mb-3">
+              <label class="form-label d-flex justify-content-between">
+                <span>Confidence Threshold:</span>
+                <strong id="conf-val">0.40</strong>
+              </label>
+              <input type="range" class="form-range" id="conf-slider" min="0.1" max="0.9" step="0.05" value="0.40"
+                oninput="document.getElementById('conf-val').textContent=parseFloat(this.value).toFixed(2)" />
+            </div>
+
+            <button class="btn-agri-dark w-100" id="btn-deteksi" onclick="jalankanDeteksi()">
+              <i class="fas fa-search me-2"></i>Jalankan Deteksi AI
+            </button>
+          </div>
+        </div>
+
+        <div class="col-lg-7">
+          <div class="clean-card">
+            <h6 class="fw-bold mb-3">2. Hasil Analisis Visual</h6>
+            <div id="deteksi-placeholder" class="text-center py-5 text-muted">
+              <i class="fas fa-image fa-3x mb-3 text-secondary opacity-50"></i>
+              <p>Pilih foto tanaman lalu klik "Jalankan Deteksi AI"</p>
+            </div>
+
+            <div id="deteksi-result" class="d-none">
+              <div id="detection-canvas-wrap" class="mb-3">
+                <canvas id="detection-canvas"></canvas>
+                <canvas id="overlay-canvas"></canvas>
+              </div>
+
+              <div class="row g-2 mb-3 text-center">
+                <div class="col">
+                  <div class="p-2 bg-light rounded-3"><small class="text-danger fw-bold">Hama</small>
+                    <h4 class="mb-0 text-danger" id="cnt-hama">0</h4>
+                  </div>
+                </div>
+                <div class="col">
+                  <div class="p-2 bg-light rounded-3"><small class="text-success fw-bold">Gulma</small>
+                    <h4 class="mb-0 text-success" id="cnt-gulma">0</h4>
+                  </div>
+                </div>
+                <div class="col">
+                  <div class="p-2 bg-light rounded-3"><small class="text-purple fw-bold"
+                      style="color:#6D4C94;">Penyakit</small>
+                    <h4 class="mb-0" style="color:#6D4C94;" id="cnt-penyakit">0</h4>
+                  </div>
+                </div>
+                <div class="col">
+                  <div class="p-2 bg-light rounded-3"><small class="text-muted fw-bold">Total</small>
+                    <h4 class="mb-0" id="cnt-total">0</h4>
+                  </div>
+                </div>
+              </div>
+
+              <div id="det-detail-list"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ════════════════════════ MODAL AUTH (LOGIN & REGISTER) ════════════════════════ -->
+  <div class="modal fade" id="authModal" tabindex="-1" aria-labelledby="authModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content auth-modal-content">
+        <!-- Modal Header -->
+        <div class="auth-header">
+          <button type="button" class="btn-close btn-close-white position-absolute top-0 end-0 m-3"
+            data-bs-dismiss="modal" aria-label="Close"></button>
+          <div class="brand-logo-icon mx-auto mb-2" style="width:42px;height:42px;">
+            <i class="fas fa-leaf"></i>
+          </div>
+          <h4 id="auth-title">Selamat Datang di Tani Pintar</h4>
+          <p id="auth-subtitle">Kelola lahan, sistem irigasi IoT & deteksi AI dalam satu akun</p>
+
+          <!-- Tab Switcher -->
+          <div class="auth-tabs">
+            <button class="auth-tab-btn active" id="tab-btn-login" onclick="switchAuthTab('login')">Masuk</button>
+            <button class="auth-tab-btn" id="tab-btn-register" onclick="switchAuthTab('register')">Daftar Akun</button>
+          </div>
+        </div>
+
+        <!-- Modal Body -->
+        <div class="auth-body">
+          <div id="auth-alert-box" class="alert alert-danger d-none py-2 px-3 small rounded-3 mb-3"></div>
+
+          <!-- FORM LOGIN -->
+          <form id="form-login" onsubmit="handleLoginSubmit(event)">
+            <div class="mb-3">
+              <label class="form-label">Email atau Nama Pengguna</label>
+              <div class="input-group">
+                <span class="input-group-text bg-light border-end-0 rounded-start-4"><i
+                    class="fas fa-envelope text-muted"></i></span>
+                <input type="text" class="form-control border-start-0 rounded-end-4" id="login-email"
+                  placeholder="petani@tanipintar.id" required />
+              </div>
+            </div>
+            <div class="mb-3">
+              <div class="d-flex justify-content-between align-items-center">
+                <label class="form-label mb-0">Kata Sandi</label>
+                <a href="javascript:void(0)"
+                  onclick="alert('Fitur reset sandi: Masukkan email Anda atau hubungi admin agrikultur.')"
+                  class="small text-success text-decoration-none">Lupa Sandi?</a>
+              </div>
+              <div class="input-group mt-1">
+                <span class="input-group-text bg-light border-end-0 rounded-start-4"><i
+                    class="fas fa-lock text-muted"></i></span>
+                <input type="password" class="form-control border-start-0 rounded-end-4" id="login-password"
+                  placeholder="••••••••" required />
+              </div>
+            </div>
+            <div class="form-check mb-4">
+              <input class="form-check-input" type="checkbox" id="login-remember" checked />
+              <label class="form-check-label small text-muted" for="login-remember">Ingat saya di perangkat ini</label>
+            </div>
+            <button type="submit" class="btn-agri-dark w-100 justify-content-center py-3">
+              <span>Masuk ke Akun Tani</span>
+              <i class="fas fa-arrow-right"></i>
+            </button>
+          </form>
+
+          <!-- FORM REGISTER -->
+          <form id="form-register" class="d-none" onsubmit="handleRegisterSubmit(event)">
+            <div class="mb-3">
+              <label class="form-label">Nama Lengkap</label>
+              <div class="input-group">
+                <span class="input-group-text bg-light border-end-0 rounded-start-4"><i
+                    class="fas fa-user text-muted"></i></span>
+                <input type="text" class="form-control border-start-0 rounded-end-4" id="reg-name"
+                  placeholder="Bpk. Hendra Gunawan" required />
+              </div>
+            </div>
+            <div class="mb-3">
+              <label class="form-label">Alamat Email</label>
+              <div class="input-group">
+                <span class="input-group-text bg-light border-end-0 rounded-start-4"><i
+                    class="fas fa-envelope text-muted"></i></span>
+                <input type="email" class="form-control border-start-0 rounded-end-4" id="reg-email"
+                  placeholder="hendra@pertanian.id" required />
+              </div>
+            </div>
+            <div class="mb-3">
+              <label class="form-label">Nomor WhatsApp / HP</label>
+              <div class="input-group">
+                <span class="input-group-text bg-light border-end-0 rounded-start-4"><i
+                    class="fas fa-phone text-muted"></i></span>
+                <input type="tel" class="form-control border-start-0 rounded-end-4" id="reg-phone"
+                  placeholder="081234567890" required />
+              </div>
+            </div>
+            <div class="mb-3">
+              <label class="form-label">Komoditas / Jenis Kebun Utama</label>
+              <select class="form-select rounded-4" id="reg-komoditas">
+                <option value="Padi Sawah">Padi Sawah</option>
+                <option value="Hortikultura / Sayur & Buah">Hortikultura / Sayur & Buah</option>
+                <option value="Cabai & Palawija">Cabai & Palawija</option>
+                <option value="Greenhouse Hidroponik">Greenhouse Hidroponik</option>
+                <option value="Lainnya">Lainnya</option>
+              </select>
+            </div>
+            <div class="mb-4">
+              <label class="form-label">Kata Sandi Baru</label>
+              <div class="input-group">
+                <span class="input-group-text bg-light border-end-0 rounded-start-4"><i
+                    class="fas fa-lock text-muted"></i></span>
+                <input type="password" class="form-control border-start-0 rounded-end-4" id="reg-password"
+                  placeholder="Minimal 6 karakter" minlength="6" required />
+              </div>
+            </div>
+            <button type="submit" class="btn-agri-dark w-100 justify-content-center py-3">
+              <span>Daftar Akun Baru</span>
+              <i class="fas fa-user-plus"></i>
+            </button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ════════════════════════ FOOTER ════════════════════════ -->
+  <footer class="py-4 border-top mt-5" style="background:#F5F3EF;">
+    <div class="container text-center text-muted small">
+      <div class="d-flex align-items-center justify-content-center gap-2 mb-2">
+        <i class="fas fa-leaf text-success"></i>
+        <strong class="text-dark">AgriNova System</strong> &middot; Empowering Farmers with Precision IoT & AI
+      </div>
+      <div>&copy; 2026 AgriNova. Modern Tech for Better Harvests. All rights reserved.</div>
+    </div>
+  </footer>
+
+  <!-- Bootstrap JS -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+  <script>
+    // ── NAVIGATION LOGIC ──
+    function switchMainTab(viewId, el) {
+      document.querySelectorAll('.app-view').forEach(v => v.classList.remove('active'));
+      document.querySelectorAll('.nav-item-link').forEach(l => l.classList.remove('active'));
+
+      const target = document.getElementById('view-' + viewId);
+      if (target) target.classList.add('active');
+      if (el) el.classList.add('active');
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+
+      if (viewId === 'monitoring') initCharts();
+    }
+
+    function showSubCalc(calcId, el) {
+      document.querySelectorAll('.sub-calc-panel').forEach(p => p.classList.add('d-none'));
+      document.querySelectorAll('.tab-pill-btn').forEach(b => b.classList.remove('active'));
+
+      const target = document.getElementById('subcalc-' + calcId);
+      if (target) target.classList.remove('d-none');
+      if (el) el.classList.add('active');
+    }
+
+    // ── SENSOR TELEMETRY & CHARTS ──
+    let charts = {};
+    let monitorInterval = null;
+    let isPumpRunning = false;
+    let autoTimerCountdown = null;
+    let currentSoilVal = 68.2;
+
+    function initCharts() {
+      if (charts.lembab) return;
+
+      charts.lembab = new Chart(document.getElementById('chart-lembab').getContext('2d'), {
+        type: 'line',
+        data: {
+          labels: [],
+          datasets: [
+            { label: 'Tanah (%)', data: [], borderColor: '#2B7A4B', backgroundColor: 'rgba(43, 122, 75, 0.1)', borderWidth: 2, fill: true, tension: 0.3, pointRadius: 2 },
+            { label: 'Udara (%)', data: [], borderColor: '#2F7C9E', borderDash: [4, 4], borderWidth: 1.5, fill: false, tension: 0.3, pointRadius: 2 }
+          ]
+        },
+        options: { responsive: true, plugins: { legend: { display: true } }, scales: { y: { min: 20, max: 100 } } }
+      });
+
+      charts.ph = new Chart(document.getElementById('chart-ph').getContext('2d'), {
+        type: 'line',
+        data: {
+          labels: [],
+          datasets: [{ label: 'pH Tanah', data: [], borderColor: '#113426', backgroundColor: 'rgba(17, 52, 38, 0.08)', borderWidth: 2, fill: true, tension: 0.3, pointRadius: 2 }]
+        },
+        options: { responsive: true, plugins: { legend: { display: false } }, scales: { y: { min: 4, max: 9 } } }
+      });
+
+      for (let i = 0; i < 10; i++) {
+        const t = new Date(Date.now() - (10 - i) * 4000);
+        addChartPoint(t, 68 + Math.sin(i) * 2, 72 + Math.cos(i) * 2, 6.52 + Math.sin(i * 0.5) * 0.05);
+      }
+    }
+
+    function addChartPoint(date, soil, lembabU, ph) {
+      const lbl = date.toLocaleTimeString('id-ID', { hour: '2-digit', minute: '2-digit', second: '2-digit' });
+      if (charts.lembab) {
+        const d = charts.lembab.data;
+        d.labels.push(lbl);
+        d.datasets[0].data.push(+soil.toFixed(1));
+        d.datasets[1].data.push(+lembabU.toFixed(1));
+        if (d.labels.length > 15) { d.labels.shift(); d.datasets[0].data.shift(); d.datasets[1].data.shift(); }
+        charts.lembab.update();
+      }
+      if (charts.ph) {
+        const d = charts.ph.data;
+        d.labels.push(lbl);
+        d.datasets[0].data.push(+ph.toFixed(2));
+        if (d.labels.length > 15) { d.labels.shift(); d.datasets[0].data.shift(); }
+        charts.ph.update();
+      }
+    }
+
+    function bacaSensor() {
+      if (!charts.lembab) initCharts();
+      const t = Date.now() / 1000;
+
+      if (isPumpRunning) {
+        currentSoilVal = Math.min(88, currentSoilVal + 0.8 + Math.random() * 0.8);
+      } else {
+        currentSoilVal = Math.max(26, currentSoilVal - 0.1 - Math.random() * 0.15);
+      }
+
+      const soil = currentSoilVal;
+      const ph = 6.52 + 0.08 * Math.sin(t * 0.05);
+      const temp = 28.4 + 0.4 * Math.sin(t * 0.1);
+      const lembab = 72 + 2 * Math.cos(t * 0.08);
+
+      document.getElementById('s-soil').textContent = soil.toFixed(1) + '%';
+      document.getElementById('s-ph').textContent = ph.toFixed(2);
+      document.getElementById('s-suhu').textContent = temp.toFixed(1) + '°C';
+      document.getElementById('s-lembab').textContent = lembab.toFixed(0) + '%';
+
+      // HUD Home update
+      const hudSoil = document.getElementById('hud-soil-val');
+      const hudTemp = document.getElementById('hud-temp-val');
+      if (hudSoil) hudSoil.textContent = soil.toFixed(0) + '%';
+      if (hudTemp) hudTemp.textContent = temp.toFixed(0) + '°C';
+
+      // pH spectrum thumb
+      const thumb = document.getElementById('ph-spectrum-thumb');
+      if (thumb) {
+        const pct = Math.min(100, Math.max(0, (ph / 14) * 100));
+        thumb.style.left = pct + '%';
+      }
+
+      // Check auto rule
+      checkAutoIrrigationRule(soil);
+
+      addChartPoint(new Date(), soil, lembab, ph);
+    }
+
+    function ubahInterval() {
+      const ms = +document.getElementById('mon-interval').value;
+      if (monitorInterval) clearInterval(monitorInterval);
+      if (ms > 0) monitorInterval = setInterval(bacaSensor, ms);
+    }
+
+    // ── ESP32 IRRIGATION ──
+    function setPompa(state) {
+      isPumpRunning = state;
+      const box = document.getElementById('pump-card-box');
+      const bulb = document.getElementById('pump-bulb');
+      const title = document.getElementById('pump-status-title');
+      const desc = document.getElementById('pump-status-desc');
+      const btnOn = document.getElementById('btn-pump-on');
+      const btnOff = document.getElementById('btn-pump-off');
+
+      if (state) {
+        box.classList.add('pump-active-state');
+        bulb.innerHTML = '<i class="fas fa-droplet"></i>';
+        title.textContent = 'POMPA AKTIF (MENYIRAM)';
+        title.classList.add('text-success');
+        desc.textContent = 'Relay GPIO 26 aktif (HIGH). Pompa air sedang mengairi tanaman.';
+        btnOn.disabled = true;
+        btnOff.disabled = false;
+        appendESP32Log('[ESP32] Relay GPIO26 HIGH -> Pompa Menyala.');
+      } else {
+        box.classList.remove('pump-active-state');
+        bulb.innerHTML = '<i class="fas fa-water"></i>';
+        title.textContent = 'POMPA MATI (IDLE)';
+        title.classList.remove('text-success');
+        desc.textContent = 'Relay GPIO 26 dalam posisi OFF. Aliran air ke pipa irigasi tertutup.';
+        btnOn.disabled = false;
+        btnOff.disabled = true;
+        appendESP32Log('[ESP32] Relay GPIO26 LOW -> Pompa Mati.');
+      }
+    }
+
+    function siramBerdurasi() {
+      const dur = +document.getElementById('pump-timer-duration').value;
+      setPompa(true);
+      appendESP32Log(`[Timer] Menyiram berdurasi ${dur} detik...`);
+      setTimeout(() => {
+        setPompa(false);
+        appendESP32Log(`[Timer] Waktu habis (${dur}s). Pompa dimatikan otomatis.`);
+      }, dur * 1000);
+    }
+
+    function toggleAutoIrrigation() {
+      const isAuto = document.getElementById('auto-irrigation-switch').checked;
+      appendESP32Log(`[Config] Otomasi Smart Threshold: ${isAuto ? 'AKTIF' : 'NONAKTIF'}`);
+    }
+
+    function checkAutoIrrigationRule(soilVal) {
+      const isAuto = document.getElementById('auto-irrigation-switch')?.checked;
+      if (!isAuto) return;
+      const thOn = +document.getElementById('threshold-on-slider').value;
+      const thOff = +document.getElementById('threshold-off-slider').value;
+
+      if (soilVal < thOn && !isPumpRunning) {
+        setPompa(true);
+        appendESP32Log(`[Auto-Trigger] Tanah kering (${soilVal.toFixed(1)}% < ${thOn}%). Pompa ON.`);
+      } else if (soilVal >= thOff && isPumpRunning) {
+        setPompa(false);
+        appendESP32Log(`[Auto-Trigger] Tanah lembab (${soilVal.toFixed(1)}% >= ${thOff}%). Pompa OFF.`);
+      }
+    }
+
+    function simpanPengaturanESP32() {
+      appendESP32Log('[EEPROM] Parameter batas threshold berhasil disimpan ke memori ESP32.');
+      alert('✅ Pengaturan berhasil disinkronkan ke ESP32!');
+    }
+
+    function appendESP32Log(msg) {
+      const t = document.getElementById('esp32-terminal');
+      if (!t) return;
+      const now = new Date().toLocaleTimeString('id-ID');
+      t.innerHTML += `\n[${now}] ${msg}`;
+      t.scrollTop = t.scrollHeight;
+    }
+
+    // ── KALKULATOR ──
+    const dosisPupuk = { 'Padi-NPK': 300, 'Jagung-NPK': 400, 'Cabai-NPK': 450, 'Tomat-NPK': 500, 'Kedelai-NPK': 250 };
+    function fmt(n) { return new Intl.NumberFormat('id-ID').format(Math.round(n)); }
+
+    function hitungPupuk() {
+      const luas = +document.getElementById('p-luas').value;
+      const tan = document.getElementById('p-tanaman').value;
+      const pup = document.getElementById('p-pupuk').value;
+      const fase = +document.getElementById('p-fase').value;
+      const dosis = dosisPupuk[tan + '-' + pup] || 350;
+      const total = luas * dosis * fase;
+      document.getElementById('res-p1').textContent = total.toFixed(1) + ' kg';
+      document.getElementById('res-p2').textContent = (dosis * fase).toFixed(1) + ' kg/ha';
+      document.getElementById('res-p3').textContent = 'Rp ' + fmt(total * 10000);
+      document.getElementById('hasil-pupuk').classList.remove('d-none');
+    }
+
+    function hitungIrigasi() {
+      const luas = +document.getElementById('i-luas').value;
+      const kc = +document.getElementById('i-metode').value;
+      const suhu = +document.getElementById('i-suhu').value;
+      const lembab = +document.getElementById('i-lembab').value;
+      const et0 = 5.0 * (suhu / 30) * ((110 - lembab) / 60);
+      const etc = et0 * kc;
+      const volH = etc * luas * 10;
+      document.getElementById('res-i1').textContent = et0.toFixed(2) + ' mm';
+      document.getElementById('res-i2').textContent = etc.toFixed(2) + ' mm';
+      document.getElementById('res-i3').textContent = fmt(volH) + ' m³';
+      document.getElementById('res-i4').textContent = fmt(volH * 7) + ' m³';
+      document.getElementById('hasil-irigasi').classList.remove('d-none');
+    }
+
+    function hitungPanen() {
+      const luas = +document.getElementById('pn-luas').value;
+      const parts = document.getElementById('pn-tanaman').value.split(',');
+      const baseProd = +parts[1], harga = +parts[2];
+      const prod = baseProd * 0.95;
+      const tot = prod * luas;
+      document.getElementById('res-pn1').textContent = prod.toFixed(2) + ' ton/ha';
+      document.getElementById('res-pn2').textContent = tot.toFixed(2) + ' ton';
+      document.getElementById('res-pn3').textContent = 'Rp ' + fmt(tot * 1000 * harga);
+      document.getElementById('hasil-panen').classList.remove('d-none');
+    }
+
+    function hitungPestisida() {
+      const luas = +document.getElementById('ps-luas').value;
+      const vol = +document.getElementById('ps-vol').value;
+      const konsen = +document.getElementById('ps-konsen').value;
+      const air = luas * vol;
+      const ba = air * konsen;
+      document.getElementById('res-ps1').textContent = fmt(air) + ' L';
+      document.getElementById('res-ps2').textContent = fmt(ba) + ' ml/g';
+      document.getElementById('res-ps3').textContent = 'Rp ' + fmt(ba * 3 * 150);
+      document.getElementById('hasil-pestisida').classList.remove('d-none');
+    }
+
+    function hitungROI() {
+      const benih = +document.getElementById('r-benih').value;
+      const pupuk = +document.getElementById('r-pupuk').value;
+      const tk = +document.getElementById('r-tk').value;
+      const ton = +document.getElementById('r-ton').value;
+      const harga = +document.getElementById('r-harga').value;
+      const biaya = benih + pupuk + tk;
+      const omset = ton * 1000 * harga;
+      const untung = omset - biaya;
+      const roi = biaya > 0 ? (untung / biaya * 100) : 0;
+      document.getElementById('res-r1').textContent = 'Rp ' + fmt(biaya);
+      document.getElementById('res-r2').textContent = 'Rp ' + fmt(omset);
+      document.getElementById('res-r3').textContent = 'Rp ' + fmt(untung);
+      document.getElementById('res-r4').textContent = roi.toFixed(1) + '%';
+      document.getElementById('hasil-roi').classList.remove('d-none');
+    }
+
+    // ── YOLOv8 DETEKSI AI ──
+    let imageElement = null;
+    const kelasDet = [
+      { id: 'aphid', label: 'Kutu Daun', tipe: 'hama', color: '#D9534F' },
+      { id: 'caterpillar', label: 'Ulat Grayak', tipe: 'hama', color: '#C9302C' },
+      { id: 'crabgrass', label: 'Rumput Liar', tipe: 'gulma', color: '#2B7A4B' },
+      { id: 'nutsedge', label: 'Rumput Teki', tipe: 'gulma', color: '#31708F' },
+      { id: 'leaf_blast', label: 'Blast Daun', tipe: 'penyakit', color: '#6D4C94' }
+    ];
+
+    function previewFoto(e) {
+      const file = e.target.files[0];
+      if (!file) return;
+      const r = new FileReader();
+      r.onload = ev => {
+        document.getElementById('preview-img').src = ev.target.result;
+        document.getElementById('preview-wrap').classList.remove('d-none');
+        imageElement = new Image();
+        imageElement.src = ev.target.result;
+      };
+      r.readAsDataURL(file);
+    }
+
+    function jalankanDeteksi() {
+      if (!imageElement) { alert('Silakan pilih foto terlebih dahulu!'); return; }
+      const btn = document.getElementById('btn-deteksi');
+      btn.disabled = true;
+      btn.innerHTML = '<i class="fas fa-spinner fa-spin me-2"></i>YOLOv8 Menganalisis...';
+
+      setTimeout(() => {
+        runDetectionProcess();
+        btn.disabled = false;
+        btn.innerHTML = '<i class="fas fa-search me-2"></i>Jalankan Deteksi AI';
+      }, 1400);
+    }
+
+    function runDetectionProcess() {
+      const canvas = document.getElementById('detection-canvas');
+      const overlay = document.getElementById('overlay-canvas');
+      const ctx = canvas.getContext('2d');
+      const oct = overlay.getContext('2d');
+
+      const W = Math.min(imageElement.naturalWidth || 640, 700);
+      const H = Math.round(W * (imageElement.naturalHeight || 480) / (imageElement.naturalWidth || 640));
+      canvas.width = W; canvas.height = H;
+      overlay.width = W; overlay.height = H;
+      ctx.drawImage(imageElement, 0, 0, W, H);
+      oct.clearRect(0, 0, W, H);
+
+      const count = 3;
+      const pool = [...kelasDet].sort(() => Math.random() - 0.5).slice(0, count);
+      const detections = [];
+
+      pool.forEach(cls => {
+        const bw = Math.floor(W * (0.2 + Math.random() * 0.25));
+        const bh = Math.floor(H * (0.2 + Math.random() * 0.25));
+        const x1 = Math.floor(Math.random() * (W - bw));
+        const y1 = Math.floor(Math.random() * (H - bh));
+        const conf = 0.75 + Math.random() * 0.22;
+
+        oct.strokeStyle = cls.color;
+        oct.lineWidth = 3;
+        oct.strokeRect(x1, y1, bw, bh);
+
+        oct.fillStyle = cls.color;
+        const text = `${cls.label} ${(conf * 100).toFixed(0)}%`;
+        oct.font = 'bold 12px Plus Jakarta Sans, sans-serif';
+        const tw = oct.measureText(text).width;
+        oct.fillRect(x1 - 1, y1 - 22, tw + 10, 22);
+        oct.fillStyle = '#fff';
+        oct.fillText(text, x1 + 4, y1 - 6);
+
+        detections.push({ ...cls, conf });
+      });
+
+      document.getElementById('cnt-hama').textContent = detections.filter(d => d.tipe === 'hama').length;
+      document.getElementById('cnt-gulma').textContent = detections.filter(d => d.tipe === 'gulma').length;
+      document.getElementById('cnt-penyakit').textContent = detections.filter(d => d.tipe === 'penyakit').length;
+      document.getElementById('cnt-total').textContent = detections.length;
+
+      document.getElementById('deteksi-placeholder').classList.add('d-none');
+      document.getElementById('deteksi-result').classList.remove('d-none');
+
+      document.getElementById('det-detail-list').innerHTML = detections.map((d, i) => `
+        <div class="p-3 bg-light rounded-4 mb-2 d-flex justify-content-between align-items-center">
+          <div>
+            <strong>[${i + 1}] ${d.label}</strong>
+            <span class="badge bg-secondary ms-2">${d.tipe.toUpperCase()}</span>
+          </div>
+          <span class="fw-bold text-success">${(d.conf * 100).toFixed(1)}% Confidence</span>
+        </div>
+      `).join('');
+    }
+
+    // ── AUTH (LOGIN & REGISTRATION) SYSTEM ──
+    let currentUser = null;
+
+    function initAuth() {
+      const savedUser = localStorage.getItem('tani_user_session');
+      if (savedUser) {
+        try {
+          currentUser = JSON.parse(savedUser);
+          renderUserNavbar();
+        } catch (e) {
+          currentUser = null;
+        }
+      }
+    }
+
+    function openAuthModal(mode = 'login') {
+      switchAuthTab(mode);
+      const modalEl = document.getElementById('authModal');
+      const modal = bootstrap.Modal.getOrCreateInstance(modalEl);
+      modal.show();
+    }
+
+    function switchAuthTab(mode) {
+      const btnLogin = document.getElementById('tab-btn-login');
+      const btnRegister = document.getElementById('tab-btn-register');
+      const formLogin = document.getElementById('form-login');
+      const formRegister = document.getElementById('form-register');
+      const authTitle = document.getElementById('auth-title');
+      const authSubtitle = document.getElementById('auth-subtitle');
+      const alertBox = document.getElementById('auth-alert-box');
+      alertBox.classList.add('d-none');
+
+      if (mode === 'login') {
+        btnLogin.classList.add('active');
+        btnRegister.classList.remove('active');
+        formLogin.classList.remove('d-none');
+        formRegister.classList.add('d-none');
+        authTitle.textContent = 'Selamat Datang Kembali';
+        authSubtitle.textContent = 'Masuk ke sistem pemantauan dan kontrol smart farm';
+      } else {
+        btnRegister.classList.add('active');
+        btnLogin.classList.remove('active');
+        formRegister.classList.remove('d-none');
+        formLogin.classList.add('d-none');
+        authTitle.textContent = 'Daftar Akun Tani Pintar';
+        authSubtitle.textContent = 'Mulai kelola lahan pintar & sensor IoT Anda';
+      }
+    }
+
+    function handleRegisterSubmit(e) {
+      e.preventDefault();
+      const name = document.getElementById('reg-name').value.trim();
+      const email = document.getElementById('reg-email').value.trim().toLowerCase();
+      const phone = document.getElementById('reg-phone').value.trim();
+      const komoditas = document.getElementById('reg-komoditas').value;
+      const password = document.getElementById('reg-password').value;
+      const alertBox = document.getElementById('auth-alert-box');
+
+      if (!name || !email || !password) {
+        alertBox.textContent = 'Harap isi seluruh kolom yang diwajibkan!';
+        alertBox.classList.remove('d-none');
+        return;
+      }
+
+      // Ambil database user dari localStorage
+      let users = JSON.parse(localStorage.getItem('tani_users_db') || '[]');
+      if (users.find(u => u.email === email)) {
+        alertBox.textContent = 'Email ini sudah terdaftar! Silakan langsung masuk.';
+        alertBox.classList.remove('d-none');
+        return;
+      }
+
+      const newUser = { name, email, phone, komoditas, password };
+      users.push(newUser);
+      localStorage.setItem('tani_users_db', JSON.stringify(users));
+
+      // Auto login setelah registrasi
+      currentUser = { name, email, phone, komoditas };
+      localStorage.setItem('tani_user_session', JSON.stringify(currentUser));
+      renderUserNavbar();
+
+      const modalEl = document.getElementById('authModal');
+      const modal = bootstrap.Modal.getInstance(modalEl);
+      if (modal) modal.hide();
+
+      alert(`🌾 Selamat datang, ${name}! Akun berhasil didaftarkan dan Anda telah otomatis masuk.`);
+    }
+
+    function handleLoginSubmit(e) {
+      e.preventDefault();
+      const emailInput = document.getElementById('login-email').value.trim().toLowerCase();
+      const passwordInput = document.getElementById('login-password').value;
+      const alertBox = document.getElementById('auth-alert-box');
+
+      // Cek akun di localStorage
+      let users = JSON.parse(localStorage.getItem('tani_users_db') || '[]');
+
+      // Akun demo bawaan jika belum ada pendaftaran
+      if (users.length === 0) {
+        users.push({
+          name: 'Petani Modern',
+          email: 'petani@tanipintar.id',
+          phone: '081234567890',
+          komoditas: 'Padi Sawah',
+          password: 'password123'
+        });
+        localStorage.setItem('tani_users_db', JSON.stringify(users));
+      }
+
+      const found = users.find(u => (u.email === emailInput || u.name.toLowerCase() === emailInput) && u.password === passwordInput);
+      if (found) {
+        currentUser = { name: found.name, email: found.email, komoditas: found.komoditas };
+        localStorage.setItem('tani_user_session', JSON.stringify(currentUser));
+        renderUserNavbar();
+
+        const modalEl = document.getElementById('authModal');
+        const modal = bootstrap.Modal.getInstance(modalEl);
+        if (modal) modal.hide();
+
+        alert(`✅ Berhasil masuk! Selamat bekerja, ${currentUser.name}.`);
+      } else {
+        alertBox.innerHTML = '<strong>Email atau kata sandi tidak cocok!</strong><br/><small>Gunakan akun demo: <code>petani@tanipintar.id</code> / <code>password123</code> atau klik tab "Daftar Akun".</small>';
+        alertBox.classList.remove('d-none');
+      }
+    }
+
+    function renderUserNavbar() {
+      const authContainer = document.getElementById('nav-auth-section');
+      if (!authContainer) return;
+
+      if (currentUser) {
+        const initials = currentUser.name.split(' ').map(n => n[0]).slice(0, 2).join('').toUpperCase();
+        authContainer.innerHTML = `
+          <div class="dropdown">
+            <div class="user-profile-badge" data-bs-toggle="dropdown" aria-expanded="false">
+              <div class="user-avatar-circle">${initials}</div>
+              <div class="d-none d-md-block text-start lh-1">
+                <span class="d-block fw-bold small text-dark">${currentUser.name}</span>
+                <small class="text-muted" style="font-size:0.72rem;">${currentUser.komoditas || 'Petani Cerdas'}</small>
+              </div>
+              <i class="fas fa-chevron-down text-muted small ms-1"></i>
+            </div>
+            <ul class="dropdown-menu dropdown-menu-end shadow-sm border-0 rounded-4 p-2 mt-2" style="min-width:210px;">
+              <li class="px-3 py-2 border-bottom mb-1">
+                <strong class="d-block text-truncate">${currentUser.name}</strong>
+                <small class="text-muted text-truncate d-block">${currentUser.email}</small>
+              </li>
+              <li><a class="dropdown-item rounded-3 py-2" href="javascript:void(0)" onclick="switchMainTab('monitoring')"><i class="fas fa-seedling me-2 text-success"></i>Kebun Saya</a></li>
+              <li><a class="dropdown-item rounded-3 py-2" href="javascript:void(0)" onclick="switchMainTab('esp32')"><i class="fas fa-microchip me-2 text-primary"></i>Kontrol Irigasi</a></li>
+              <li><hr class="dropdown-divider"></li>
+              <li><a class="dropdown-item rounded-3 py-2 text-danger" href="javascript:void(0)" onclick="handleLogout()"><i class="fas fa-arrow-right-from-bracket me-2"></i>Keluar Akun</a></li>
+            </ul>
+          </div>
+        `;
+      } else {
+        authContainer.innerHTML = `
+          <button class="btn btn-outline-dark rounded-pill px-3 py-2 fw-bold text-nowrap d-flex align-items-center gap-2" onclick="openAuthModal('login')">
+            <i class="fas fa-arrow-right-to-bracket text-success"></i>
+            <span>Masuk / Daftar</span>
+          </button>
+        `;
+      }
+    }
+
+    function handleLogout() {
+      if (confirm('Apakah Anda yakin ingin keluar dari akun?')) {
+        currentUser = null;
+        localStorage.removeItem('tani_user_session');
+        renderUserNavbar();
+        alert('Anda telah berhasil keluar.');
+      }
+    }
+
+    // Inisialisasi awal
+    window.addEventListener('DOMContentLoaded', () => {
+      initAuth();
+      ubahInterval();
+    });
+  </script>
+</body>
+
+</html>
